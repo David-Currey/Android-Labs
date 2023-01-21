@@ -29,23 +29,39 @@
         />
 
     <CheckBox
+        android:id="@+id/checkBox"
         android:text="@string/coffee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
 
     <Switch
+        android:id="@+id/switch1"
         android:text="@string/coffee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
 
     <RadioButton
+        android:id="@+id/radioButton"
         android:text="@string/coffee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
 
+    <ImageView
+        android:id="@+id/Alogo"
+        android:src="@drawable/logo_algonquin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <ImageButton
+        android:id="@+id/myimagebutton"
+        android:src="@drawable/logo_algonquin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 
 
 </LinearLayout>
