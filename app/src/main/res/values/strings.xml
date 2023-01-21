@@ -2,5 +2,9 @@
     <string name="app_name">David\'s Android Labs</string>
     <string name="hello_message">Hello World!</string>
     <string name="button_message">i\'m a button</string>
+    <string name="editmessage">i\'m an EditText</string>
+    <string name="hinttext">write something here</string>
+    <string name="coffee">do you drink coffee?</string>
+
 
 </resources>
