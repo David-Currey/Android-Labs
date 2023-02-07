@@ -3,4 +3,9 @@
     <string name="app_name">David\'s Android Labs</string>
     <string name="hello_message">oy mate</string>
     <string name="button_message">oy im a button</string>
+    <string name="spin_message">spin flag mate</string>
+    <string name="button1">Button 1 AU</string>
+    <string name="button2">Button 2 AU</string>
+    <string name="button3">Button 3 AU</string>
+
 </resources>
