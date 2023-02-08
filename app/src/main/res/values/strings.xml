@@ -2,5 +2,6 @@
     <string name="app_name">David\'s Android Labs</string>
     <string name="hello_message">Hello World!</string>
     <string name="button_message">i\'m a button</string>
+    <string name="EmailAddress" translatable="false"></string>
 
 </resources>
