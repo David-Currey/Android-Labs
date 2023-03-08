@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import algonquin.cst2335.curr0263.databinding.ActivityMainBinding;
+
 /** this class contains the main Page of the application and related methods
  * @author David Currey
  * @version 1.0
