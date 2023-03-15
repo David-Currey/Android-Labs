@@ -61,6 +61,10 @@ public class ChatRoom extends AppCompatActivity
                             .setAction("Undo", click -> {
                                 messages.add(position, m);
                                 myAdapter.notifyItemInserted(position);
+                                thread.execute( () -> {
+                                    long id = mDAO.insertMessage(m);
+                                    m.id = id;
+                                });
                             })
                             .show();
                 }).create().show();
