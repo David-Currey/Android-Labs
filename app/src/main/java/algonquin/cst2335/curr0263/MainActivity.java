@@ -10,23 +10,33 @@ import android.widget.Toast;
 
 import algonquin.cst2335.curr0263.databinding.ActivityMainBinding;
 
-/** this class contains the main Page of the application and related methods
+/**
+ * this class contains the main Page of the application and related methods
+ *
  * @author David Currey
  * @version 1.0
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
 
-    /** This holds the text at the centre of the screen */
+    /**
+     * This holds the text at the centre of the screen
+     */
     TextView tv = null;
 
-    /** this holds the password entered by the user */
+    /**
+     * this holds the password entered by the user
+     */
     EditText et = null;
 
-    /** this is the login button */
+    /**
+     * this is the login button
+     */
     Button btn = null;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -34,24 +44,22 @@ public class MainActivity extends AppCompatActivity {
         et = findViewById(R.id.editText);
         btn = findViewById(R.id.button);
 
-        btn.setOnClickListener( clk->
+        btn.setOnClickListener(clk ->
         {
             String password = et.getText().toString();
             boolean pwd = checkPasswordComplexity(password);
 
-            if (pwd == true)
-            {
+            if (pwd == true) {
                 tv.setText("your password meets the requirements");
-            }
-            else
-            {
+            } else {
                 tv.setText("you shall not pass!");
             }
         });
 
     }
 
-    /** this function checks the complexity of a users password
+    /**
+     * this function checks the complexity of a users password
      *
      * @param pw the String object that we are checking
      * @return returns true if the password is complex enough
@@ -70,47 +78,40 @@ public class MainActivity extends AppCompatActivity {
             else if (isSpecialCharacter(c) == true) foundSpecial = true;
         }
 
-        if(!foundUpperCase)
+        if (!foundUpperCase)
         {
 
             Toast.makeText(this, "missing uppercase letter", Toast.LENGTH_SHORT).show();
 
             return false;
-        }
-
-        else if( ! foundLowerCase)
+        } else if (!foundLowerCase)
         {
             Toast.makeText(this, "missing lowercase letter", Toast.LENGTH_SHORT).show();
 
             return false;
-        }
-
-        else if( ! foundNumber)
-        {
+        } else if (!foundNumber) {
             Toast.makeText(this, "missing number", Toast.LENGTH_SHORT).show();
 
             return false;
-        }
-
-        else if(! foundSpecial)
+        } else if (!foundSpecial)
         {
             Toast.makeText(this, "missing special character", Toast.LENGTH_SHORT).show();
 
             return false;
-        }
-        else
+        } else
 
             return true;
     }
 
-    /** checks if a character is special
+    /**
+     * checks if a character is special
      *
      * @param c character beign checked
      * @return true if c is a scpecial character
      */
     boolean isSpecialCharacter(char c)
     {
-        switch(c)
+        switch (c)
         {
             case '#':
             case '?':
