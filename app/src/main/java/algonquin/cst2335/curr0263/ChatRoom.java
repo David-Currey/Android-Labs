@@ -10,9 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -29,6 +33,7 @@ import algonquin.cst2335.curr0263.databinding.SentMessageBinding;
 
 public class ChatRoom extends AppCompatActivity
 {
+
     class MyRowHolder extends RecyclerView.ViewHolder
     {
         TextView messageText;
@@ -41,33 +46,38 @@ public class ChatRoom extends AppCompatActivity
             itemView.setOnClickListener(clk ->
             {
                 int position = getAbsoluteAdapterPosition();
-                AlertDialog.Builder builder = new AlertDialog.Builder( ChatRoom.this );
+                // AlertDialog.Builder builder = new AlertDialog.Builder( ChatRoom.this );
 
-                builder.setMessage("do you want to delete the message: " + messageText.getText())
-                .setTitle("Question:")
-                .setNegativeButton("No", (dialog, cl) -> {})
-                .setPositiveButton("Yes", (dialog, cl) ->
-                {
-                    ChatMessage m = messages.get(position);
+                /** fragment **/
+                ChatMessage selected = messages.get(position);
+                chatModel.selectedMessage.postValue(selected);
+                /** fragment **/
 
-                    Executor thread = Executors.newSingleThreadExecutor();
-                    thread.execute( () -> {
-                        mDAO.deleteMessage(m);
-                    });
-                    messages.remove(position);
-                    myAdapter.notifyItemRemoved(position);
-
-                    Snackbar.make(messageText, "you deleted message #" + position, Snackbar.LENGTH_LONG)
-                            .setAction("Undo", click -> {
-                                messages.add(position, m);
-                                myAdapter.notifyItemInserted(position);
-                                thread.execute( () -> {
-                                    long id = mDAO.insertMessage(m);
-                                    m.id = id;
-                                });
-                            })
-                            .show();
-                }).create().show();
+//                builder.setMessage("do you want to delete the message: " + messageText.getText())
+//                .setTitle("Question:")
+//                .setNegativeButton("No", (dialog, cl) -> {})
+//                .setPositiveButton("Yes", (dialog, cl) ->
+//                {
+//                    ChatMessage m = messages.get(position);
+//
+//                    Executor thread = Executors.newSingleThreadExecutor();
+//                    thread.execute( () -> {
+//                        mDAO.deleteMessage(m);
+//                    });
+//                    messages.remove(position);
+//                    myAdapter.notifyItemRemoved(position);
+//
+//                    Snackbar.make(messageText, "you deleted message #" + position, Snackbar.LENGTH_LONG)
+//                            .setAction("Undo", click -> {
+//                                messages.add(position, m);
+//                                myAdapter.notifyItemInserted(position);
+//                                thread.execute( () -> {
+//                                    long id = mDAO.insertMessage(m);
+//                                    m.id = id;
+//                                });
+//                            })
+//                            .show();
+//                }).create().show();
             });
 
             messageText = itemView.findViewById(R.id.message);
@@ -82,6 +92,36 @@ public class ChatRoom extends AppCompatActivity
     ChatMessageDAO mDAO;
     ArrayList<ChatMessage> messageList;
 
+    /** toolbar **/
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch( item.getItemId() )
+        {
+            case R.id.item_1:
+
+
+                break;
+
+            case R.id.item_2:
+                Toast.makeText(this,
+                        "Version 1.0, created by David Currey",
+                        Toast.LENGTH_LONG).show();
+                break;
+
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.my_menu, menu);
+        return true;
+    }
+
+    /** toolbar **/
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -92,6 +132,25 @@ public class ChatRoom extends AppCompatActivity
 
         chatModel = new ViewModelProvider(this).get(chatRoomViewModel.class);
         messages = chatModel.messages.getValue();
+
+        /** fragment **/
+
+        chatModel.selectedMessage.observe(this, (newMessageValue) -> {
+            MessageDetailsFragment chatFragment = new MessageDetailsFragment
+                    (newMessageValue);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentLocation, chatFragment)
+                    .addToBackStack("")
+                    .commit();
+        });
+
+        /** fragment **/
+
+        /** toolbar **/
+
+        setSupportActionBar(binding.myToolbar);
+
+        /** toolbar **/
 
         //open database
         MessageDatabase db = Room.databaseBuilder(getApplicationContext(),
@@ -112,11 +171,6 @@ public class ChatRoom extends AppCompatActivity
                 runOnUiThread( () ->  binding.recycleView.setAdapter( myAdapter )); //You can then load the RecyclerView
             });
         }
-
-//        if(messages == null)
-//        {
-//            chatModel.messages.postValue( messages = new ArrayList<ChatMessage>());
-//        }
 
         binding.recycleView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -210,6 +264,8 @@ public class ChatRoom extends AppCompatActivity
                     return 1;
                 }
             }
+
+
         });
     }
 }
